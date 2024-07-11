@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 const dataSchema = new mongoose.Schema({
   // Define the schema fields here based on your data structure
@@ -9,8 +10,10 @@ const dataSchema = new mongoose.Schema({
   // Add other fields as needed
 });
 
+
 const messages = mongoose.model('messages', dataSchema);
 
+app.use(cors());
 
 // module.exports = Data;
 
