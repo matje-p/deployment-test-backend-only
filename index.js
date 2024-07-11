@@ -36,7 +36,7 @@ app.get('/first-object', async (req, res) => {
       if (!firstObject) {
         return res.status(404).send('No data found');
       }
-      res.json(firstObject);
+      res.json(firstObject.content);
     } catch (error) {
       console.error('Error retrieving data:', error);
       res.status(500).send('Internal Server Error');
