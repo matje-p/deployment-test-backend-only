@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const dataSchema = new mongoose.Schema({
   // Define the schema fields here based on your data structure
-  content: { content: String },
+  content: { type: String },
   // Add other fields as needed
 });
 
