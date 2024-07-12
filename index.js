@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
 const cors = require('cors');
+require('dotenv').config();  // Add this line
+
+const app = express();
 const port = process.env.PORT || 3000;
 const dataSchema = new mongoose.Schema({
   content: { type: String },
@@ -12,7 +14,7 @@ const messages = mongoose.model('messages', dataSchema);
 app.use(cors());
 app.use(express.json());
 
-const mongoUri = 'mongodb+srv://matje-p:ZNZGiQPvB0X86osf@cluster0.g4bap1z.mongodb.net/DeploymentTest?retryWrites=true&w=majority';
+const mongoUri = process.env.MONGODB_URI;  // Update this line to read from environment variable
 
 mongoose.connect(mongoUri, {}).then(() => {
   console.log('Connected to MongoDB');
@@ -42,10 +44,10 @@ app.post('/add-message', async (req, res) => {
     const { content } = req.body;
     const newMessage = new messages({ content });
     await newMessage.save();
-    res.status(201).json({ message: 'Message added successfully' }); // Return JSON response
+    res.status(201).json({ message: 'Message added successfully' });
   } catch (error) {
     console.error('Error adding message:', error);
-    res.status(500).json({ error: 'Internal Server Error' }); // Return JSON error response
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -55,7 +57,7 @@ app.get('/all-messages', async (req, res) => {
     res.json(allMessages);
   } catch (error) {
     console.error('Error retrieving messages:', error);
-    res.status(500).json({ error: 'Internal Server Error' }); // Return JSON error response
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
